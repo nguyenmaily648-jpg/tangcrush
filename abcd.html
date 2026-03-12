@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gửi Người Thương ❤️</title>
+    <style>
+        :root {
+            --primary-pink: #ff4d6d;
+            --shopee-orange: #ee4d2d;
+            --bg-color: #ffeef2;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--bg-color);
+            font-family: 'Montserrat', 'Segoe UI', Tahoma, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
+            z-index: 10;
+            max-width: 400px;
+            width: 90%;
+            transition: all 0.5s ease;
+        }
+
+        h1 { color: var(--primary-pink); margin-bottom: 15px; font-size: 2rem; }
+        p { font-size: 1.1rem; color: #444; line-height: 1.6; }
+
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .row-btns {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        #yesBtn { background-color: var(--primary-pink); color: white; min-width: 120px; }
+        #yesBtn:hover { transform: scale(1.15); background-color: #ff758f; }
+
+        #noBtn { background-color: #bbb; color: white; position: relative; }
+
+        #shopeeBtn {
+            background-color: var(--shopee-orange);
+            color: white;
+            display: none; /* Chỉ hiện khi đã đồng ý */
+            width: 100%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .heart {
+            position: absolute;
+            color: var(--primary-pink);
+            font-size: 20px;
+            animation: move 3s linear forwards;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes move {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainCard">
+        <h1 id="title">Chào cậu! ❤️</h1>
+        <p id="question">Tớ có điều này muốn hỏi... <br> <b>Cậu có đồng ý làm người yêu tớ không?</b></p>
+        
+        <div class="buttons">
+            <div class="row-btns" id="actionBtns">
+                <button id="yesBtn">Đồng ý!</button>
+                <button id="noBtn">Không nha</button>
+            </div>
+            <button id="shopeeBtn" onclick="window.open('https://shopee.vn', '_blank')">
+                🛒 Tặng quà cho tớ nhé!
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const shopeeBtn = document.getElementById('shopeeBtn');
+        const question = document.getElementById('question');
+        const title = document.getElementById('title');
+        const actionBtns = document.getElementById('actionBtns');
+
+        // Hiệu ứng nút "Không" chạy trốn
+        noBtn.addEventListener('mouseover', () => {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        });
+
+        // Khi nhấn "Đồng ý"
+        yesBtn.addEventListener('click', () => {
+            title.innerText = "Hạnh phúc quá! 😍";
+            question.innerHTML = "Tớ biết là cậu cũng thích tớ mà! <br> Hãy cùng nhau tạo nên những kỷ niệm đẹp nhé.";
+            
+            // Ẩn 2 nút cũ, hiện nút Shopee
+            actionBtns.style.display = 'none';
+            shopeeBtn.style.display = 'block';
+            
+            // Chạy hiệu ứng trái tim bay
+            setInterval(createHeart, 150);
+        });
+
+        // Hàm tạo trái tim bay lãng mạn
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            const icons = ['❤️', '💖', '💝', '✨', '🌸'];
+            heart.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
